@@ -19,7 +19,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
           # Add the target repo using PAT
-          git remote add target https://x-access-token:${{ secrets.EPARIES_LIVE_DEPLOY_PAT }}@github.com/eparies/eparies-website-live
+          git remote add target https://x-access-token:${{ secrets.EPARIES_LIVE_DEPLOY_PAT }}@github.com/eparies/eparies-website-live.git
           
           # Push the main branch to the target repo
           git push --force target main
