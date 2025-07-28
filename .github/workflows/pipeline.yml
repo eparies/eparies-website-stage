@@ -1,0 +1,26 @@
+name: Pipeline to Sync Stage to Live Repository
+
+on:
+  push:
+    branches:
+      - main  # triggers only when main is updated
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout EPARIES Stage Repository
+        uses: actions/checkout@v4
+
+      - name: Push to target EPARIES Live Repository
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Add the target repo using PAT
+          git remote add target https://x-access-token:${{ secrets.EPARIES_LIVE_DEPLOY_PAT }}@github.com/eparies/eparies-website-live.git
+          
+          # Push the main branch to the target repo
+          git push --force target main
